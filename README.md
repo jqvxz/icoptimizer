@@ -1,19 +1,12 @@
 # icoptimizer
-  _____    _____      ____            _     _               _                     
- |_   _|  / ____|    / __ \          | |   (_)             (_)                    
-   | |   | |        | |  | |  _ __   | |_   _   _ __ ___    _   ____   ___   _ __ 
-   | |   | |        | |  | | | '_ \  | __| | | | '_ ` _ \  | | |_  /  / _ \ | '__|
-  _| |_  | |____    | |__| | | |_) | | |_  | | | | | | | | | |  / /  |  __/ | |   
- |_____|  \_____|    \____/  | .__/   \__| |_| |_| |_| |_| |_| /___|  \___| |_|   
-                             | |                                                  
-                             |_|                                                  
-How to use
+
+## How to use
 
 1. DO NOT right click and execute the start file as admin. Wait for the script to ask you
 2. Wait and follow the instructions inside the script 
 3. You can look into the info folder if something went wrong
 
-What does the script do
+## What does the script do
 
 1. Clear DNS cache -> Improve ping and network issues
 2. Reset the network adapter -> Improve the ping and network issues
@@ -29,7 +22,7 @@ What does the script do
    and the device the script was executed on. It is named after your computers name using %computername% 
 9. After that you can hit the "clear" file to clear the output logs
 
-FAQ
+## FAQ
 
 1. "I want to keep some of the things the script disables e.g. Windows search" - No you don't
 2. "Why is it called IC Optimizer" - Idk
