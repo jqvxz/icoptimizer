@@ -2,7 +2,7 @@
                                               
 How to use
 
-1. DO NOT right click and execute the start file as admin. Wait for the script to ask you
+1. Do not right click and execute the start file as admin. Wait for the script to ask you
 2. Wait and follow the instructions inside the script 
 3. You can look into the info folder if something went wrong
 
