@@ -24,4 +24,4 @@
 ## FAQ
 
 1. "I want to keep some of the things the script disables e.g. Windows search" - No you don't
-2. "Why is it called IC Optimizer" - Idk 
+2. "Why is it called IC Optimizer" - Idk  
