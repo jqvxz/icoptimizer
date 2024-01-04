@@ -1,4 +1,4 @@
-# ic optimizer
+# IC optimizer
                                               
 ## How to use
 
