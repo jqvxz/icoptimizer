@@ -1,4 +1,4 @@
-# icoptimizer
+# ic optimizer
                                               
 ## How to use
 
