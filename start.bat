@@ -58,7 +58,7 @@ tasklist > %file%
 :: Modify Windows Search (disable searching the web) (admin required)
 set timestamp=%date%
 set "file=REG_edit_output_%timestamp%.txt"
-reg query "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer" > nul 2>&1
+reg query "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer\DisableSearchBoxSuggestions" > nul 2>&1
 if %errorlevel% == 1 ( 
     reg add "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer" /v DisableSearchBoxSuggestions /t REG_DWORD /d 1 /f  >nul 2>&1
     echo [*] ^> Created DisableSearchBoxSuggestions registry key
