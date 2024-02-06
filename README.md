@@ -24,4 +24,4 @@
 11. After that you can hit the "clear" file to clear the output logs
     
 ## FAQ
-1. Just open an issue above
+1. Just open an issue above 
