@@ -1,4 +1,5 @@
 @echo off
+:: Get admin
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 if %errorlevel% neq 0 ( goto UACPrompt ) else ( goto :start )
 :UACPrompt
@@ -22,8 +23,12 @@ echo.
 echo.
 cd .main/info
 echo Executed on [%computername%] by [%username%] on [%date%] at [%time%] with [Windows 10/11/8/7] > .%computername%
-title IC - Optimizer V 2.0
-for /f "tokens=*" %%a in ('wmic cpu get name^,numberofcores^,numberoflogicalprocessors') do set "cpu=%%a"
+title IC - Optimizer V 3.0
+for /f "tokens=2 delims==" %%G in ('wmic cpu get name /value') do set "cpu=%%G"
+for /f "tokens=2 delims==" %%G in ('wmic path win32_videocontroller get name /value') do set "video=%%G"
+for /f "tokens=2 delims==" %%G in ('wmic diskdrive get model /value') do set "storage=%%G"
+for /f "tokens=2 delims==" %%G in ('wmic memorychip get capacity /value') do set "ram_kb=%%G"
+set /a "ram_gb=%ram_kb% / 1048576"
 SETLOCAL ENABLEDELAYEDEXPANSION
 set lang=%SystemRoot%\System32\wbem\wmic.exe os get locale
 :: Clear DNS (no admin required)
@@ -31,79 +36,133 @@ set timestamp=%date%
 set "file=DNS_output_%timestamp%.txt"
 ipconfig /flushdns > %file%
 @ping -n 1 localhost> nul
-if %errorlevel% == 0 ( echo [*] ^> Cleared DNS cache ) else ( echo [*] ^> Error while executing command at 34 )
+if %errorlevel% == 0 ( echo [*] ^> Cleared DNS cache ) else ( echo [*] ^> Error while executing command at 1 )
 :: Reset Network Adapter (admin required)
 set timestamp=%date%
 set "file=Network_clear_output_%timestamp%.txt"
 netsh winsock reset > %file%
 @ping -n 1 localhost> nul
-if %errorlevel% == 0 ( echo [*] ^> Reset Network Adapter ) else ( echo [*] ^> Error while executing command at 40 )
+if %errorlevel% == 0 ( echo [*] ^> Reset Network Adapter ) else ( echo [*] ^> Error while executing command at 2 )
 :: Kill Processes (admin required) 
 set timestamp=%date%
 set "file=KILL_output_%timestamp%.txt"
 taskkill /f /im NewsAndInterests.exe >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed 1 ) else ( echo [*] ^> Error while executing command at 45 )
+if %errorlevel% == 0 ( echo [*] ^> Killed 1 NewsAndInterests.exe ) else ( echo [*] ^> Error while executing command at 3 )
 taskkill /f /im OneDrive.exe >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed 2 ) else ( echo [*] ^> Error while executing command at 47 )
+if %errorlevel% == 0 ( echo [*] ^> Killed 2 neDrive.exe ) else ( echo [*] ^> Error while executing command at 4 )
 taskkill /f /im ctfmon.exe >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed 3 ) else ( echo [*] ^> Error while executing command at 49 )
+if %errorlevel% == 0 ( echo [*] ^> Killed 3 ctfmon.exe ) else ( echo [*] ^> Error while executing command at 5 )
 taskkill /f /im PhoneExperienceHost.exe >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed 4 ) else ( echo [*] ^> Error while executing command at 51 )
+if %errorlevel% == 0 ( echo [*] ^> Killed 4 PhoneExperienceHost.exe ) else ( echo [*] ^> Error while executing command at 6 )
 taskkill /f /im GrooveMusic.exe >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed 5 ) else ( echo [*] ^> Error while executing command at 53 )
+if %errorlevel% == 0 ( echo [*] ^> Killed 5 GrooveMusic.exe ) else ( echo [*] ^> Error while executing command at 7 )
 taskkill /f /im Cortana.exe >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed 6 ) else ( echo [*] ^> Error while executing command at 55 )
+if %errorlevel% == 0 ( echo [*] ^> Killed 6 Cortana.exe ) else ( echo [*] ^> Error while executing command at 8 )
 tasklist > %file%
-@ping -n 1 localhost> nulcx
+@ping -n 1 localhost> nul
 :: Modify Windows Search (disable searching the web) (admin required)
 set timestamp=%date%
 set "file=REG_edit_output_%timestamp%.txt"
 reg query "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer\DisableSearchBoxSuggestions" > nul 2>&1
 if %errorlevel% == 1 ( 
-    reg add "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer" /v DisableSearchBoxSuggestions /t REG_DWORD /d 1 /f  >nul 2>&1
+    reg add "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer" /v DisableSearchBoxSuggestions /t REG_DWORD /d 1 /f >%file%
     echo [*] ^> Created DisableSearchBoxSuggestions registry key
 ) else ( 
-    echo [*] ^> Error while executing command at 58
+    echo [*] ^> Error while executing command at 9
 )
 :: Disable Error Report (at application crash) (admin required)
 set timestamp=%date%
 set "file=REG_edit2_output_%timestamp%.txt"
 reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\Windows Error Reporting\LocalDumps\DoNotPromptForNonCriticalErrors" >nul 2>&1
 if %errorlevel% == 1 (
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\Windows Error Reporting\LocalDumps" /v DoNotPromptForNonCriticalErrors /t REG_DWORD /d 1 /f >nul 2>&1
+    reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\Windows Error Reporting\LocalDumps" /v DoNotPromptForNonCriticalErrors /t REG_DWORD /d 1 /f >%file%
     echo [*] ^> Created DoNotPromptForNonCriticalErrors registry key 
 ) else (
-    echo [*] ^> Error while executing command at 76
+    echo [*] ^> Error while executing command at 10
+)
+:: Disable Windows Telemetry (admin required)
+set timestamp=%date%
+set "file=REG_edit3_output_%timestamp%.txt"
+:: Check if telemetry is already disabled
+reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection\AllowTelemetry" >nul 2>&1
+if %errorlevel% == 1 (
+:: Disable telemetry (admin required)
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v AllowTelemetry /t REG_DWORD /d 0 /f >nul 2>&1
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v DisableEnterpriseAuthProxy /t REG_DWORD /d 1 /f >%file%
+:: Stop and disable DiagTrack service (admin required)
+    sc stop DiagTrack >nul 2>&1
+    sc config DiagTrack start= disabled >nul 2>&1
+:: Stop and disable dmwappushservice (admin required)
+    sc stop dmwappushservice >nul 2>&1
+    sc config dmwappushservice start= disabled >nul 2>&1
+    echo [*] ^> Windows Telemetry disabled successfully
+) else (
+    echo [*] ^> No changes made while executing command at 11
+)
+:: Disable Disable Compatibility Assistant (admin required)
+set %timestamp%=%date%
+set "file=REG_edit4_output_%timestamp%.txt"
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\AppCompat" /v DisableUAR /t REG_DWORD /d 1 /f >nul 2>&1
+if %errorlevel% == 0 (
+    echo [*] ^> Created DisableCompatibilityAssistant registry key
+)
+gpupdate /force > %file% disabled >nul 2>&1
+if %errorlevel% == 1 (
+    echo [*] ^> Error while executing command at 12
+)
+:: Disable Remote Registry service (admin required)
+set %timestamp%=%date%
+set "file=Stop_Reg_output_%timestamp%.txt"
+sc config RemoteRegistry start= disabled >%file%
+if %errorlevel% equ 0 (
+    echo [*] ^> Remote Registry service disabled successfully
+) else (
+    echo [*] ^> No changes made while executing command at 13
+)
+:: Disable Windows Remote Management service (admin required)
+set %timestamp%=%date%
+set "file=Stop_RM_output_%timestamp%.txt"
+sc config WinRM start= disabled >%file%
+if %errorlevel% equ 0 (
+    echo [*] ^> Windows Remote Management service disabled successfully
+) else (
+    echo [*] ^> No changes made while executing command at 14
 )
 :: Restart Explorer.exe (no admin required)
 set "file=KILL_explorer_output_%timestamp%.txt"
-taskkill /f /im explorer.exe > %file%
-if %errorlevel% == 0 ( echo [*] ^> Killed explorer ) else ( echo [*] ^> Error while executing command at 81 )
+taskkill /f /im explorer.exe >%file% >nul 2>&
+if %errorlevel% == 0 ( echo [*] ^> Killed explorer ) else ( echo [*] ^> Error while executing command at 15 )
 @ping -n 1 localhost> nul
 start explorer.exe
-if %errorlevel% == 0 ( echo [*] ^> Started explorer ) else ( echo [*] ^> Error while executing command at 84 )
+if %errorlevel% == 0 ( echo [*] ^> Started explorer ) else ( echo [*] ^> Error while executing command at 16 )
 @ping -n 1 localhost> nul
 :: Restart Audiosrv (admin required)
 set "file=Restart_audio_output_%timestamp%.txt"
-net stop audiosrv > %file% > nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Paused audiosrv ) else ( echo [*] ^> Error while executing command at 89 )
+net stop audiosrv > %file%
+if %errorlevel% == 0 ( echo [*] ^> Paused audiosrv ) else ( echo [*] ^> Error while executing command at 17 )
 @ping -n 1 localhost> nul
 net start audiosrv > nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Started audiosrv ) else ( echo [*] ^> Error while executing command at 92 )
+if %errorlevel% == 0 ( echo [*] ^> Started audiosrv ) else ( echo [*] ^> Error while executing command at 18 )
+@ping -n 1 localhost> nul
+:: Disk Cleanup
+set "file=Disk_output_%timestamp%.txt"
+cleanmgr /sagerun:1 > %file%
+if %errorlevel% == 0 ( echo [*] ^> Cleaned Disk successfully ) else ( echo [*] ^> Error while executing command at 19 )
 @ping -n 1 localhost> nul
 :: Clear Windows Temp / Bin (don't run with admin)
-start cmd /c del "%temp%\*.*" /s /q /f rem no admin
+start cmd /c del "%temp%\*.*" /s /q /f
 start cmd /c rd /s /q C:\$Recycle.Bin
-if %errorlevel% == 0 ( echo [*] ^> Cleared Windows Temp ) else ( echo [*] ^> Error while executing command at 97 )
+if %errorlevel% == 0 ( echo [*] ^> Cleared Windows Temp ) else ( echo [*] ^> Error while executing command at 20 )
 @ping -n 1 localhost> nul
 :: Ask for sfc (admin required)
+echo.
 set timestamp=%date%
 set "file=sfc_output_%timestamp%.txt"
+echo [*] ^> You can perform a file scan to check your system
 set /p sfc="Perform a file scan (y/N): "
-if sfc == y ( sfc /scannow > %file% ) else ( goto skipsfc )
-if %errorlevel% == 0 ( echo [*] ^> Scan complete ) else ( echo [*] ^> Error while executing command at 104 )
+if %sfc% == y ( sfc /scannow > %file% ) else ( goto skipsfc )
+if %errorlevel% == 0 ( echo [*] ^> Scan complete ) else ( echo [*] ^> Error while executing command at 21 )
 :skipsfc
-@ping -n 1 localhost> nul
 :: End of the script / Restart
 echo.
 echo [*] ^> You need to restart your computer for all the commands to work
