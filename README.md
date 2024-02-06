@@ -15,7 +15,7 @@
 6. Clear Windows Temp and Bin -> Improve performance and free up some space
 7. Restart Audio and Explorer.exe -> Fix issues
 8. More REG edits like telementry (V.3)
-9. Disavle more useless Services (V.3)
+9. Disable more useless Services (V.3)
 10. The script will create "debug logs" / "outputs" for some of the commands, you can use those to see if something went wrong.
     e.g. if you receive and error and one of the files contains a text that tells you a specific command has to be executed with admin rights,
     you know that you have to restart the script with those rights. The script also creates a file with the information about the useragent
