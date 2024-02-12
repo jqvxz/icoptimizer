@@ -1,5 +1,5 @@
 # IC optimizer
-![alt text]([http://url/to/img.png](https://cdn.discordapp.com/attachments/931672626290642994/1206685950864793600/render_ic.mp4?ex=65dce8dd&is=65ca73dd&hm=3a688072eb1d8d3fef75efa4c9c5080d70d55e533f286ff1f5a7169afb28b705&))
+https://cdn.discordapp.com/attachments/931672626290642994/1206685950864793600/render_ic.mp4?ex=65dce8dd&is=65ca73dd&hm=3a688072eb1d8d3fef75efa4c9c5080d70d55e533f286ff1f5a7169afb28b705&
                                      
 ## How to use
 1. DO NOT right click and execute the start file as admin. Wait for the script to ask you
