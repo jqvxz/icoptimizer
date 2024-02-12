@@ -1,18 +1,6 @@
 # IC optimizer
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="4000.000000pt" height="2000.000000pt" viewBox="0 0 4000.000000 2000.000000"
- preserveAspectRatio="xMidYMid meet">
-
-<g transform="translate(0.000000,2000.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
-<path d="M0 10000 l0 -10000 20000 0 20000 0 0 10000 0 10000 -20000 0 -20000
-0 0 -10000z"/>
-</g>
-</svg>
-                                     
+![ic](https://github.com/jqvxz/icoptimizer/assets/143961758/632d93c4-d454-4f35-9f33-f2bfc2527e30)
+                        
 ## How to use
 1. DO NOT right click and execute the start file as admin. Wait for the script to ask you
 2. Wait and follow the instructions inside the script 
