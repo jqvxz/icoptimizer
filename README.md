@@ -1,5 +1,5 @@
 # IC optimizer
-![Image](https://ibb.co/j3Kp68T)
+![Image]()
                                      
 ## How to use
 1. DO NOT right click and execute the start file as admin. Wait for the script to ask you
