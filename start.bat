@@ -163,6 +163,9 @@ set /p sfc="Perform a file scan (y/N): "
 if %sfc% == y ( sfc /scannow > %file% ) else ( goto skipsfc )
 if %errorlevel% == 0 ( echo [*] ^> Scan complete ) else ( echo [*] ^> Error while executing command at 21 )
 :skipsfc
+:: Ask for additional debug info
+echo.
+echo [*] ^> Do you want to create an additional debug folder for your pc
 :: End of the script / Restart
 echo.
 echo [*] ^> You need to restart your computer for all the commands to work
