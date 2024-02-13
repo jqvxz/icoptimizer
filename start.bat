@@ -130,7 +130,7 @@ if %errorlevel% equ 0 (
 )
 :: Restart Explorer.exe (no admin required)
 set "file=KILL_explorer_output_%timestamp%.txt"
-taskkill /f /im explorer.exe >%file% >nul 2>&
+taskkill /f /im explorer.exe >%file% >nul 2>&1
 if %errorlevel% == 0 ( echo [*] ^> Killed explorer ) else ( echo [*] ^> Error while executing command at 15 )
 @ping -n 1 localhost> nul
 start explorer.exe
