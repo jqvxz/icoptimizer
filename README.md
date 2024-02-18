@@ -2,30 +2,30 @@
 ![ic](https://github.com/jqvxz/icoptimizer/assets/143961758/632d93c4-d454-4f35-9f33-f2bfc2527e30)
                         
 ## How to use
-● DO NOT right click and execute the start file as admin. Wait for the script to ask you
-● Wait and follow the instructions inside the script 
-● You can look into the info folder if something went wrong
-● Current Version is 3.0 (2.0 can be downloaded on github)
+- DO NOT right click and execute the start file as admin. Wait for the script to ask you
+- Wait and follow the instructions inside the script 
+- You can look into the info folder if something went wrong
+- Current Version is 3.0 (2.0 can be downloaded on github)
 
 ## What does the script do
-● Clear DNS Cache: Enhances network performance.
-● Reset Network Adapter: Resolves connectivity issues.
-● Kill Processes: Optimizes system performance.
-● Modify Windows Search: Improves privacy in Explorer.
-● Disable Error Report: Prevents non-critical error prompts.
-● Disable Windows Telemetry: Enhances privacy.
-● Disable Compatibility Assistant: Improves operation.
-● Disable Remote Registry Service: Boosts security.
-● Disable Windows Remote Management Service
-● Reset IP Stack: Fixes network problems.
-● TCP Configuration: Optimizes network settings.
-● Clear ARP Cache: Resolves network issues.
-● Restart Explorer.exe: Refreshes interface.
-● Restart Audiosrv: Fixes audio problems.
-● Disk Cleanup: Frees disk space.
-● Clear Windows Temp/Bin: Optimizes disk usage.
-● Perform File Scan (sfc): Checks system files.
-● Restart Computer: Implements changes.
+- Clear DNS Cache: Enhances network performance.
+- Reset Network Adapter: Resolves connectivity issues.
+- Kill Processes: Optimizes system performance.
+- Modify Windows Search: Improves privacy in Explorer.
+- Disable Error Report: Prevents non-critical error prompts.
+- Disable Windows Telemetry: Enhances privacy.
+- Disable Compatibility Assistant: Improves operation.
+- Disable Remote Registry Service: Boosts security.
+- Disable Windows Remote Management Service
+- Reset IP Stack: Fixes network problems.
+- TCP Configuration: Optimizes network settings.
+- Clear ARP Cache: Resolves network issues.
+- Restart Explorer.exe: Refreshes interface.
+- Restart Audiosrv: Fixes audio problems.
+- Disk Cleanup: Frees disk space.
+- Clear Windows Temp/Bin: Optimizes disk usage.
+- Perform File Scan (sfc): Checks system files.
+- Restart Computer: Implements changes.
     
 ## FAQ
-● Just open an issue above 
+- Just open an issue above 
