@@ -5,7 +5,7 @@
 - DO NOT right click and execute the start file as admin. Wait for the script to ask you
 - Wait and follow the instructions inside the script 
 - You can look into the info folder if something went wrong
-- Current Version is 3.0 (2.0 can be downloaded on github)
+- Current Version is 3.2 (previous releases are available as well)
 
 ## What does the script do
 - Clear DNS Cache: Enhances network performance.
