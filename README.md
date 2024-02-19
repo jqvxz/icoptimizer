@@ -2,26 +2,30 @@
 ![ic](https://github.com/jqvxz/icoptimizer/assets/143961758/632d93c4-d454-4f35-9f33-f2bfc2527e30)
                         
 ## How to use
-1. DO NOT right click and execute the start file as admin. Wait for the script to ask you
-2. Wait and follow the instructions inside the script 
-3. You can look into the info folder if something went wrong
-4. Current Version is 3.0 (2.0 can be downloaded on github)
+- DO NOT right click and execute the start file as admin. Wait for the script to ask you
+- Wait and follow the instructions inside the script 
+- You can look into the info folder if something went wrong
+- Current Version is 3.2 (previous releases are available as well)
 
 ## What does the script do
-1. Clear DNS cache -> Improve ping and network issues
-2. Reset the network adapter -> Improve the ping and network issues
-3. Kill useless processes -> Improve performance
-4. Disable searching the web with windows search bar
-5. Make programms close instantly when crash instead of collecting information
-6. Clear Windows Temp and Bin -> Improve performance and free up some space
-7. Restart Audio and Explorer.exe -> Fix issues
-8. More REG edits like telementry (V.3)
-9. Disable more useless Services (V.3)
-10. The script will create "debug logs" / "outputs" for some of the commands, you can use those to see if something went wrong.
-    e.g. if you receive and error and one of the files contains a text that tells you a specific command has to be executed with admin rights,
-    you know that you have to restart the script with those rights. The script also creates a file with the information about the useragent
-    and the device the script was executed on. It is named after your computers name using %computername% 
-11. After that you can hit the "clear" file to clear the output logs
+- Clear DNS Cache: Enhances network performance.
+- Reset Network Adapter: Resolves connectivity issues.
+- Kill Processes: Optimizes system performance.
+- Modify Windows Search: Improves privacy in Explorer.
+- Disable Error Report: Prevents non-critical error prompts.
+- Disable Windows Telemetry: Enhances privacy.
+- Disable Compatibility Assistant: Improves operation.
+- Disable Remote Registry Service: Boosts security.
+- Disable Windows Remote Management Service
+- Reset IP Stack: Fixes network problems.
+- TCP Configuration: Optimizes network settings.
+- Clear ARP Cache: Resolves network issues.
+- Restart Explorer.exe: Refreshes interface.
+- Restart Audiosrv: Fixes audio problems.
+- Disk Cleanup: Frees disk space.
+- Clear Windows Temp/Bin: Optimizes disk usage.
+- Perform File Scan (sfc): Checks system files.
+- Restart Computer: Implements changes.
     
 ## FAQ
-1. Just open an issue above 
+- Just open an issue above 
