@@ -22,13 +22,14 @@ cd ..\..
 echo.
 echo.
 cd .main/info
-echo Executed on [%computername%] by [%username%] on [%date%] at [%time%] with [Windows 10/11/8/7] > .%computername%
-title IC - Optimizer V 3.0
 for /f "tokens=2 delims==" %%G in ('wmic cpu get name /value') do set "cpu=%%G"
 for /f "tokens=2 delims==" %%G in ('wmic path win32_videocontroller get name /value') do set "video=%%G"
 for /f "tokens=2 delims==" %%G in ('wmic diskdrive get model /value') do set "storage=%%G"
 for /f "tokens=2 delims==" %%G in ('wmic memorychip get capacity /value') do set "ram_kb=%%G"
-set /a "ram_gb=%ram_kb% / 1048576"
+echo Executed on [%computername%] by [%username%] on [%date%] at [%time%] with [Windows 10/11/8/7] > .%computername%
+echo. >> .%computername%
+echo Specs are [%cpu%] [%video%] [%storage%] [%ram_kb%] >> .%computername%
+title IC - Optimizer V 3.2
 SETLOCAL ENABLEDELAYEDEXPANSION
 set lang=%SystemRoot%\System32\wbem\wmic.exe os get locale
 :: Clear DNS (no admin required)
@@ -36,28 +37,60 @@ set timestamp=%date%
 set "file=DNS_output_%timestamp%.txt"
 ipconfig /flushdns > %file%
 @ping -n 1 localhost> nul
-if %errorlevel% == 0 ( echo [*] ^> Cleared DNS cache ) else ( echo [*] ^> Error while executing command at 1 )
+if %errorlevel% == 0 ( 
+    echo [*] ^> Cleared DNS cache 
+) else ( 
+    echo [*] ^> Error while executing command at 1 
+)
 :: Reset Network Adapter (admin required)
 set timestamp=%date%
 set "file=Network_clear_output_%timestamp%.txt"
 netsh winsock reset > %file%
 @ping -n 1 localhost> nul
-if %errorlevel% == 0 ( echo [*] ^> Reset Network Adapter ) else ( echo [*] ^> Error while executing command at 2 )
+if %errorlevel% == 0 ( 
+    echo [*] ^> Reset Network Adapter 
+) else ( 
+    echo [*] ^> Error while executing command at 2 
+)
 :: Kill Processes (admin required) 
 set timestamp=%date%
 set "file=KILL_output_%timestamp%.txt"
 taskkill /f /im NewsAndInterests.exe >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed 1 NewsAndInterests.exe ) else ( echo [*] ^> Error while executing command at 3 )
+if %errorlevel% == 0 ( 
+    echo [*] ^> Killed 1 NewsAndInterests.exe 
+) else ( 
+    echo [*] ^> Error while executing command at 3 
+)
 taskkill /f /im OneDrive.exe >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed 2 neDrive.exe ) else ( echo [*] ^> Error while executing command at 4 )
+if %errorlevel% == 0 ( 
+    echo [*] ^> Killed 2 neDrive.exe 
+) else ( 
+    echo [*] ^> Error while executing command at 4 
+)
 taskkill /f /im ctfmon.exe >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed 3 ctfmon.exe ) else ( echo [*] ^> Error while executing command at 5 )
+if %errorlevel% == 0 ( 
+    echo [*] ^> Killed 3 ctfmon.exe 
+) else ( 
+    echo [*] ^> Error while executing command at 5 
+)
 taskkill /f /im PhoneExperienceHost.exe >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed 4 PhoneExperienceHost.exe ) else ( echo [*] ^> Error while executing command at 6 )
+if %errorlevel% == 0 ( 
+    echo [*] ^> Killed 4 PhoneExperienceHost.exe 
+) else ( 
+    echo [*] ^> Error while executing command at 6 
+)
 taskkill /f /im GrooveMusic.exe >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed 5 GrooveMusic.exe ) else ( echo [*] ^> Error while executing command at 7 )
+if %errorlevel% == 0 ( 
+    echo [*] ^> Killed 5 GrooveMusic.exe 
+) else ( 
+    echo [*] ^> Error while executing command at 7 
+)
 taskkill /f /im Cortana.exe >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed 6 Cortana.exe ) else ( echo [*] ^> Error while executing command at 8 )
+if %errorlevel% == 0 ( 
+    echo [*] ^> Killed 6 Cortana.exe 
+) else ( 
+    echo [*] ^> Error while executing command at 8 
+)
 tasklist > %file%
 @ping -n 1 localhost> nul
 :: Modify Windows Search (disable searching the web) (admin required)
@@ -128,31 +161,84 @@ if %errorlevel% equ 0 (
 ) else (
     echo [*] ^> No changes made while executing command at 14
 )
+:: Reset IPstack
+set timestamp=%date%
+set "file=IPstack_output_%timestamp%.txt"
+netsh int ip reset > %file%
+if %errorlevel% == 0 ( 
+    echo [*] ^> Cleared IP stack 
+) else ( 
+    echo [*] ^> Error while executing command at 15
+)
+@ping -n 1 localhost> nul
+:: TCP edit (idk if admin required)
+set timestamp=%date%
+set "file=TCP_edit_output_%timestamp%.txt"
+netsh int tcp set heuristics disabled > %file%
+if %errorlevel% == 0 (
+    echo [*] ^> TCP has been configurated 
+) else ( 
+    echo [*] ^> Error while executing command at 16 
+)
+@ping -n 1 localhost> nul
+:: Clear ARP (admin required)
+set timestamp=%date%
+set "file=Clear_ARP_output_%timestamp%.txt"
+arp -d * > %file%
+if %errorlevel% == 0 (
+    echo [*] ^> ARP has been cleared 
+) else ( 
+    echo [*] ^> Error while executing command at 17
+)
 :: Restart Explorer.exe (no admin required)
 set "file=KILL_explorer_output_%timestamp%.txt"
-taskkill /f /im explorer.exe >%file% >nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Killed explorer ) else ( echo [*] ^> Error while executing command at 15 )
+taskkill /f /im explorer.exe >nul 2>&1 >%file%
+if %errorlevel% == 0 (
+    echo [*] ^> Killed explorer 
+) else ( 
+    echo [*] ^> Error while executing command at 18 
+)
 @ping -n 1 localhost> nul
-start explorer.exe
-if %errorlevel% == 0 ( echo [*] ^> Started explorer ) else ( echo [*] ^> Error while executing command at 16 )
+start explorer.exe >nul 2>&1
+if %errorlevel% == 0 (
+    echo [*] ^> Started explorer 
+) else (
+    echo [*] ^> Error while executing command at 19
+)
 @ping -n 1 localhost> nul
 :: Restart Audiosrv (admin required)
 set "file=Restart_audio_output_%timestamp%.txt"
 net stop audiosrv > %file%
-if %errorlevel% == 0 ( echo [*] ^> Paused audiosrv ) else ( echo [*] ^> Error while executing command at 17 )
+if %errorlevel% == 0 (
+    echo [*] ^> Paused audiosrv 
+) else ( 
+    echo [*] ^> Error while executing command at 20 
+)
 @ping -n 1 localhost> nul
 net start audiosrv > nul 2>&1
-if %errorlevel% == 0 ( echo [*] ^> Started audiosrv ) else ( echo [*] ^> Error while executing command at 18 )
+if %errorlevel% == 0 (
+    echo [*] ^> Started audiosrv 
+) else ( 
+    echo [*] ^> Error while executing command at 21 
+)
 @ping -n 1 localhost> nul
 :: Disk Cleanup
 set "file=Disk_output_%timestamp%.txt"
 cleanmgr /sagerun:1 > %file%
-if %errorlevel% == 0 ( echo [*] ^> Cleaned Disk successfully ) else ( echo [*] ^> Error while executing command at 19 )
+if %errorlevel% == 0 (
+    echo [*] ^> Cleaned Disk successfully 
+) else ( 
+    echo [*] ^> Error while executing command at 22 
+)
 @ping -n 1 localhost> nul
 :: Clear Windows Temp / Bin (don't run with admin)
 start cmd /c del "%temp%\*.*" /s /q /f
 start cmd /c rd /s /q C:\$Recycle.Bin
-if %errorlevel% == 0 ( echo [*] ^> Cleared Windows Temp ) else ( echo [*] ^> Error while executing command at 20 )
+if %errorlevel% == 0 (
+    echo [*] ^> Cleared Windows Temp 
+) else ( 
+    echo [*] ^> Error while executing command at 23 
+)
 @ping -n 1 localhost> nul
 :: Ask for sfc (admin required)
 echo.
@@ -160,16 +246,25 @@ set timestamp=%date%
 set "file=sfc_output_%timestamp%.txt"
 echo [*] ^> You can perform a file scan to check your system
 set /p sfc="Perform a file scan (y/N): "
-if %sfc% == y ( sfc /scannow > %file% ) else ( goto skipsfc )
-if %errorlevel% == 0 ( echo [*] ^> Scan complete ) else ( echo [*] ^> Error while executing command at 21 )
+if %sfc% == y ( 
+    sfc /scannow > %file% 
+) else ( 
+    goto skipsfc 
+)
+if %errorlevel% == 0 ( 
+    echo [*] ^> Scan complete 
+) else ( 
+    echo [*] ^> Error while executing command at 24 
+)
 :skipsfc
-:: Ask for additional debug info
-echo.
-echo [*] ^> Do you want to create an additional debug folder for your pc
 :: End of the script / Restart
 echo.
 echo [*] ^> You need to restart your computer for all the commands to work
 set /p restart="Restart your pc (y/N): "
-if %restart% == y ( shutdown /r /f /t 1 ) else ( exit )
+if %restart% == y ( 
+    shutdown /r /f /t 1 
+) else (
+    exit 
+)
 start cmd.exe /c @echo off && ping -n 2 localhost> nul 2>&1
 exit
