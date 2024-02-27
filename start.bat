@@ -17,7 +17,7 @@ title Loading...
 type jqvon.txt
 timeout -t 1 > nul
 cls
-type header.txt
+type header.txt 
 cd ..\..
 echo.
 echo.
@@ -29,17 +29,44 @@ for /f "tokens=2 delims==" %%G in ('wmic memorychip get capacity /value') do set
 echo Executed on [%computername%] by [%username%] on [%date%] at [%time%] with [Windows 10/11/8/7] > .%computername%
 echo. >> .%computername%
 echo Specs are [%cpu%] [%video%] [%storage%] [%ram_kb%] >> .%computername%
-title IC - Optimizer V 3.2
+title IC - Optimizer V 3.3
 SETLOCAL ENABLEDELAYEDEXPANSION
 set lang=%SystemRoot%\System32\wbem\wmic.exe os get locale
+:: Select script (no admin)
+echo [1] ^> Execute all commands 
+@ping -n 1 localhost> nul
+echo [2] ^> Only execute network related commands
+@ping -n 1 localhost> nul
+echo [3] ^> Only perform registery edits
+@ping -n 1 localhost> nul
+echo [4] ^> Exclude commands that only need to be executed once
+@ping -n 1 localhost> nul
+set /p select="Select actions (1-4): "
+echo.
+if %select% == 1 ( 
+    goto default_start 
+)
+if %select% == 2 (
+    goto network_cmd 
+)
+if %select% == 3 ( 
+    goto reg_cmd 
+)
+if %select% == 4 ( 
+    goto second_execute
+)
+exit
 :: Clear DNS (no admin required)
+:network_cmd rem Start of network section 1
+:default_start rem Start of normal execute 1
+:second_execute rem Start of exlude one time sections (reg edits)
 set timestamp=%date%
 set "file=DNS_output_%timestamp%.txt"
 ipconfig /flushdns > %file%
 @ping -n 1 localhost> nul
 if %errorlevel% == 0 ( 
     echo [*] ^> Cleared DNS cache 
-) else ( 
+) else (
     echo [*] ^> Error while executing command at 1 
 )
 :: Reset Network Adapter (admin required)
@@ -52,6 +79,7 @@ if %errorlevel% == 0 (
 ) else ( 
     echo [*] ^> Error while executing command at 2 
 )
+if %select% == 2 ( goto network_cmd_2 )
 :: Kill Processes (admin required) 
 set timestamp=%date%
 set "file=KILL_output_%timestamp%.txt"
@@ -93,7 +121,9 @@ if %errorlevel% == 0 (
 )
 tasklist > %file%
 @ping -n 1 localhost> nul
+if %select% == 4 ( goto second_execute_2 )
 :: Modify Windows Search (disable searching the web) (admin required)
+:reg_cmd rem Start of REG edits 1
 set timestamp=%date%
 set "file=REG_edit_output_%timestamp%.txt"
 reg query "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer\DisableSearchBoxSuggestions" > nul 2>&1
@@ -161,7 +191,10 @@ if %errorlevel% equ 0 (
 ) else (
     echo [*] ^> No changes made while executing command at 14
 )
+if %select% == 3 ( goto end )
 :: Reset IPstack
+:second_execute_2 rem Start of exclude reg (second run)
+:network_cmd_2 rem Start of network section 2
 set timestamp=%date%
 set "file=IPstack_output_%timestamp%.txt"
 netsh int ip reset > %file%
@@ -190,6 +223,7 @@ if %errorlevel% == 0 (
 ) else ( 
     echo [*] ^> Error while executing command at 17
 )
+if %select% == 2 ( goto end )
 :: Restart Explorer.exe (no admin required)
 set "file=KILL_explorer_output_%timestamp%.txt"
 taskkill /f /im explorer.exe >nul 2>&1 >%file%
@@ -241,6 +275,7 @@ if %errorlevel% == 0 (
 )
 @ping -n 1 localhost> nul
 :: Ask for sfc (admin required)
+:end
 echo.
 set timestamp=%date%
 set "file=sfc_output_%timestamp%.txt"
@@ -251,8 +286,8 @@ if %sfc% == y (
 ) else ( 
     goto skipsfc 
 )
-if %errorlevel% == 0 ( 
-    echo [*] ^> Scan complete 
+if %errorlevel% == 0 (
+    goto skipsfc
 ) else ( 
     echo [*] ^> Error while executing command at 24 
 )

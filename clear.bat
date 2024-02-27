@@ -1,0 +1,3 @@
+@echo off
+title Clear...
+del /q info\*
