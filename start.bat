@@ -292,7 +292,31 @@ if %errorlevel% == 0 (
     echo [*] ^> Error while executing command at 24 
 )
 :skipsfc
+:: Ask for addons
+echo.
+@ping -n 1 localhost> nul
+echo [*] ^> Do you want to execute addons as well
+set /p addons="Use addons (list/N): "
+if %addons% == list (
+    echo.
+    echo [*] ^> sysfix.bat
+    echo [*] ^> driverfix.bat
+) else (
+    goto end
+)
+set /p exaddons="Select your addon (addon/N): "
+if %exaddons% == sysfix.bat (
+    cd ..
+    cd addons && start sysfix.bat
+)
+if %exaddons% == driverfix.bat (
+    cd ..
+    cd addons && start driverfix
+) else (
+    goto end
+)
 :: End of the script / Restart
+:end
 echo.
 echo [*] ^> You need to restart your computer for all the commands to work
 set /p restart="Restart your pc (y/N): "
