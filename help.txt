@@ -1,0 +1,46 @@
+  _____    _____      ____            _     _               _                     
+ |_   _|  / ____|    / __ \          | |   (_)             (_)                    
+   | |   | |        | |  | |  _ __   | |_   _   _ __ ___    _   ____   ___   _ __ 
+   | |   | |        | |  | | | '_ \  | __| | | | '_ ` _ \  | | |_  /  / _ \ | '__|
+  _| |_  | |____    | |__| | | |_) | | |_  | | | | | | | | | |  / /  |  __/ | |   
+ |_____|  \_____|    \____/  | .__/   \__| |_| |_| |_| |_| |_| /___|  \___| |_|   
+                             | |                                                  
+                             |_|                                                  
+How to use
+
+- DO NOT right click and execute the start file as admin. Wait for the script to ask you
+- Wait and follow the instructions inside the script 
+- You can look into the info folder if something went wrong
+- Current Version is 3.3 - Unstable (2.0/3.0 can be downloaded on github)
+
+What does the script do
+
+- Clear DNS Cache - Improves network performance by clearing DNS cache.
+- Reset Network Adapter - Resets network settings for troubleshooting connectivity issues.
+- Kill Processes - Terminates specified processes to optimize system performance.
+- Modify Windows Search - Disables web search in Windows Explorer for privacy.
+- Disable Error Report - Prevents Windows from prompting for non-critical error reports.
+- Disable Windows Telemetry - Stops Windows telemetry data collection for privacy.
+- Disable Compatibility Assistant - Turns off Compatibility Assistant for smoother operation.
+- Disable Remote Registry Service - Enhances security by disabling remote registry access.
+- Disable Windows Remote Management Service - Increases security by disabling.
+- Reset IP Stack - Fixes network connectivity issues by resetting the IP configuration.
+- TCP Configuration - Adjusts TCP settings for network optimization.
+- Clear ARP Cache - Resolves network issues by clearing the ARP cache.
+- Restart Explorer.exe - Refreshes the Windows Explorer interface.
+- Restart Audiosrv - Resolves audio-related issues by restarting the audio service.
+- Disk Cleanup - Frees up disk space by cleaning unnecessary files.
+- Clear Windows Temp/Bin - Cleans temporary and recycle bin files for disk optimization.
+- Added Addons (sysfix.bat, driver.fix) - Execute some more commands
+- Perform File Scan (sfc) - Checks and repairs system files for integrity.
+- Restart Computer - Prompts to restart the computer for changes to take effect.
+
+- The script will create "debug logs" / "outputs" for some of the commands, you can use those to see if something went wrong.
+  e.g. if you receive and error and one of the files contains a text that tells you a specific command has to be executed with admin rights,
+  you know that you have to restart the script with those rights. The script also creates a file with the information about the useragent
+  and the device the script was executed on. It is named after your computers name using %computername% 
+
+FAQ
+
+- "I want to keep some of the things the script disables e.g. Windows search" - No you don't
+- "Why is it called IC Optimizer" - Idk
