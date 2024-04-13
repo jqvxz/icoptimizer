@@ -8,6 +8,7 @@
 - Current Version is 3.3 (previous releases are available as well)
 
 ## What does the script do
+- Select what commands should be executed
 - Clear DNS Cache: Enhances network performance.
 - Reset Network Adapter: Resolves connectivity issues.
 - Kill Processes: Optimizes system performance.
@@ -23,6 +24,7 @@
 - Restart Explorer.exe: Refreshes interface.
 - Restart Audiosrv: Fixes audio problems.
 - Disk Cleanup: Frees disk space.
+- Addons: sysfix.bat, driverfix.bat
 - Clear Windows Temp/Bin: Optimizes disk usage.
 - Perform File Scan (sfc): Checks system files.
 - Restart Computer: Implements changes.
