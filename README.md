@@ -8,7 +8,7 @@
 - DO NOT right click and execute the start file as admin. Wait for the script to ask you
 - Wait and follow the instructions inside the script 
 - You can look into the info folder if something went wrong
-- Current Version is 3.3 (previous releases are available as well)
+- Current Version is 3.4 (previous releases are available as well)
 
 ## What does the script do
 - Select what commands should be executed
