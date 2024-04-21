@@ -2,7 +2,7 @@
 ![ic](https://github.com/jqvxz/icoptimizer/assets/143961758/632d93c4-d454-4f35-9f33-f2bfc2527e30)
 
 ## Information
-- I will develop a nodejs version of icoptimizer soon to use electron
+- I will soon create a version of icoptimizer using a real programming language
                         
 ## How to use
 - DO NOT right click and execute the start file as admin. Wait for the script to ask you
