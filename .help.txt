@@ -36,7 +36,7 @@ What does the script do
 - Restart Computer - Prompts to restart the computer for changes to take effect.
 
 - The script will create "debug logs" / "outputs" for some of the commands, you can use those to see if something went wrong.
-  e.g. if you receive and error and one of the files contains a text that tells you a specific command has to be executed with admin rights,
+  e.g. if you receive an error and one of the files contains a text that tells you a specific command has to be executed with admin rights,
   you know that you have to restart the script with those rights. The script also creates a file with the information about the useragent
   and the device the script was executed on. It is named after your computers name using %computername% 
 
