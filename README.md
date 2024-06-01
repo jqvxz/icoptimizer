@@ -1,5 +1,5 @@
 # IC optimizer
-![ic](https://github.com/jqvxz/icoptimizer/assets/143961758/632d93c4-d454-4f35-9f33-f2bfc2527e30)
+![ic](https://github.com/jqvxz/icoptimizer/assets/143961758/aaecb917-3c01-4c68-b402-dd60a09bc230)
 
 ## Information
 - I will soon create a version of icoptimizer using a real programming language
