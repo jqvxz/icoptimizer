@@ -2,6 +2,7 @@
 ![ic](https://github.com/jqvxz/icoptimizer/assets/143961758/aaecb917-3c01-4c68-b402-dd60a09bc230)
 
 ## Information
+- Easy and simple windows batch optimizer
 - I will soon create a version of icoptimizer using a real programming language
                         
 ## How to use
