@@ -1,4 +1,5 @@
 @echo off
+setlocal EnableDelayedExpansion
 :: Get admin
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 if %errorlevel% neq 0 ( goto UACPrompt ) else ( goto :start )
@@ -8,18 +9,28 @@ if %errorlevel% neq 0 ( goto UACPrompt ) else ( goto :start )
     "%temp%\GetAdmin.vbs"
     del "%temp%\GetAdmin.vbs"
     exit /B
-:: Display Header and Watermark
 :start
 cd /d "%~dp0"
+:: Define ANSI escape codes
+for /F %%e in ('echo prompt $E ^| cmd') do set "ESC=%%e"
+set "RED=!ESC![31m"
+set "GREEN=!ESC![32m"
+set "YELLOW=!ESC![33m"
+set "BLUE=!ESC![34m"
+set "MAGENTA=!ESC![35m"
+set "CYAN=!ESC![36m"
+set "WHITE=!ESC![37m"
+set "RESET=!ESC![0m"
+:: Display header
 :header
-cd header 
+cd header
 title Loading...
-type jqvon.txt
 timeout -t 1 > nul
 cls
-type header.txt 
+for /F "delims=" %%A in (header.txt) do (
+    echo %RED%%%A%RESET%
+)
 cd ..\..
-echo.
 echo.
 cd .main/info
 for /f "tokens=2 delims==" %%G in ('wmic cpu get name /value') do set "cpu=%%G"
@@ -33,13 +44,13 @@ title IC - Optimizer V 3.4
 SETLOCAL ENABLEDELAYEDEXPANSION
 set lang=%SystemRoot%\System32\wbem\wmic.exe os get locale
 :: Select script (no admin)
-echo [1] ^> Execute all commands 
+echo %YELLOW%[%CYAN%1%YELLOW%]%RESET% ^> Execute all commands 
 @ping -n 1 localhost> nul
-echo [2] ^> Only execute network related commands
+echo %YELLOW%[%CYAN%2%YELLOW%]%RESET% ^> Only execute network related commands
 @ping -n 1 localhost> nul
-echo [3] ^> Only perform registery edits
+echo %YELLOW%[%CYAN%3%YELLOW%]%RESET% ^> Only perform registery edits
 @ping -n 1 localhost> nul
-echo [4] ^> Exclude commands that only need to be executed once
+echo %YELLOW%[%CYAN%4%YELLOW%]%RESET% ^> Exclude commands that only need to be executed once
 @ping -n 1 localhost> nul
 set /p select="Select actions (1-4): "
 echo.
@@ -65,9 +76,9 @@ set "file=DNS_output_%timestamp%.txt"
 ipconfig /flushdns > %file%
 @ping -n 1 localhost> nul
 if %errorlevel% == 0 ( 
-    echo [*] ^> Cleared DNS cache 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Cleared DNS cache 
 ) else (
-    echo [*] ^> Error while executing command at 1 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 1 
 )
 :: Reset Network Adapter (admin required)
 set timestamp=%date%
@@ -75,9 +86,9 @@ set "file=Network_clear_output_%timestamp%.txt"
 netsh winsock reset > %file%
 @ping -n 1 localhost> nul
 if %errorlevel% == 0 ( 
-    echo [*] ^> Reset Network Adapter 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Reset Network Adapter 
 ) else ( 
-    echo [*] ^> Error while executing command at 2 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 2 
 )
 if %select% == 2 ( goto network_cmd_2 )
 :: Kill Processes (admin required) 
@@ -85,39 +96,39 @@ set timestamp=%date%
 set "file=KILL_output_%timestamp%.txt"
 taskkill /f /im NewsAndInterests.exe >nul 2>&1
 if %errorlevel% == 0 ( 
-    echo [*] ^> Killed 1 NewsAndInterests.exe 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Killed 1 NewsAndInterests.exe 
 ) else ( 
-    echo [*] ^> Error while executing command at 3 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 3 
 )
 taskkill /f /im OneDrive.exe >nul 2>&1
 if %errorlevel% == 0 ( 
-    echo [*] ^> Killed 2 neDrive.exe 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Killed 2 neDrive.exe 
 ) else ( 
-    echo [*] ^> Error while executing command at 4 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 4 
 )
 taskkill /f /im ctfmon.exe >nul 2>&1
 if %errorlevel% == 0 ( 
-    echo [*] ^> Killed 3 ctfmon.exe 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Killed 3 ctfmon.exe 
 ) else ( 
-    echo [*] ^> Error while executing command at 5 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 5 
 )
 taskkill /f /im PhoneExperienceHost.exe >nul 2>&1
 if %errorlevel% == 0 ( 
-    echo [*] ^> Killed 4 PhoneExperienceHost.exe 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Killed 4 PhoneExperienceHost.exe 
 ) else ( 
-    echo [*] ^> Error while executing command at 6 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 6 
 )
 taskkill /f /im GrooveMusic.exe >nul 2>&1
 if %errorlevel% == 0 ( 
-    echo [*] ^> Killed 5 GrooveMusic.exe 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Killed 5 GrooveMusic.exe 
 ) else ( 
-    echo [*] ^> Error while executing command at 7 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 7 
 )
 taskkill /f /im Cortana.exe >nul 2>&1
 if %errorlevel% == 0 ( 
-    echo [*] ^> Killed 6 Cortana.exe 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Killed 6 Cortana.exe 
 ) else ( 
-    echo [*] ^> Error while executing command at 8 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 8 
 )
 tasklist > %file%
 @ping -n 1 localhost> nul
@@ -129,9 +140,9 @@ set "file=REG_edit_output_%timestamp%.txt"
 reg query "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer\DisableSearchBoxSuggestions" > nul 2>&1
 if %errorlevel% == 1 ( 
     reg add "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer" /v DisableSearchBoxSuggestions /t REG_DWORD /d 1 /f >%file%
-    echo [*] ^> Created DisableSearchBoxSuggestions registry key
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Created DisableSearchBoxSuggestions registry key
 ) else ( 
-    echo [*] ^> Error while executing command at 9
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 9
 )
 :: Disable Error Report (at application crash) (admin required)
 set timestamp=%date%
@@ -139,9 +150,9 @@ set "file=REG_edit2_output_%timestamp%.txt"
 reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\Windows Error Reporting\LocalDumps\DoNotPromptForNonCriticalErrors" >nul 2>&1
 if %errorlevel% == 1 (
     reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\Windows Error Reporting\LocalDumps" /v DoNotPromptForNonCriticalErrors /t REG_DWORD /d 1 /f >%file%
-    echo [*] ^> Created DoNotPromptForNonCriticalErrors registry key 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Created DoNotPromptForNonCriticalErrors registry key 
 ) else (
-    echo [*] ^> Error while executing command at 10
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 10
 )
 :: Disable Windows Telemetry (admin required)
 set timestamp=%date%
@@ -158,38 +169,47 @@ if %errorlevel% == 1 (
 :: Stop and disable dmwappushservice (admin required)
     sc stop dmwappushservice >nul 2>&1
     sc config dmwappushservice start= disabled >nul 2>&1
-    echo [*] ^> Windows Telemetry disabled successfully
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Windows Telemetry disabled successfully
 ) else (
-    echo [*] ^> No changes made while executing command at 11
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> No changes made while executing command at 11
 )
 :: Disable Disable Compatibility Assistant (admin required)
 set %timestamp%=%date%
 set "file=REG_edit4_output_%timestamp%.txt"
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\AppCompat" /v DisableUAR /t REG_DWORD /d 1 /f >nul 2>&1
 if %errorlevel% == 0 (
-    echo [*] ^> Created DisableCompatibilityAssistant registry key
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Created DisableCompatibilityAssistant registry key
 )
 gpupdate /force > %file% disabled >nul 2>&1
 if %errorlevel% == 1 (
-    echo [*] ^> Error while executing command at 12
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 12
 )
 :: Disable Remote Registry service (admin required)
 set %timestamp%=%date%
-set "file=Stop_Reg_output_%timestamp%.txt"
+set "file=REG_edit5_output_%timestamp%.txt"
 sc config RemoteRegistry start= disabled >%file%
 if %errorlevel% equ 0 (
-    echo [*] ^> Remote Registry service disabled successfully
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Remote Registry service disabled successfully
 ) else (
-    echo [*] ^> No changes made while executing command at 13
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> No changes made while executing command at 13
+)
+:: Disable Cortana (admin required)
+set %timestamp%=%date%
+set "file=REG_edit6_output_%timestamp%.txt" 
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v AllowCortana /t REG_DWORD /d 0 /f >nul 2>&1 
+if %errorlevel% == 0 (
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Created DisableCortana registry key
+) else (
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> No changes made while executing command at 14
 )
 :: Disable Windows Remote Management service (admin required)
 set %timestamp%=%date%
 set "file=Stop_RM_output_%timestamp%.txt"
 sc config WinRM start= disabled >%file%
 if %errorlevel% equ 0 (
-    echo [*] ^> Windows Remote Management service disabled successfully
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Windows Remote Management service disabled successfully
 ) else (
-    echo [*] ^> No changes made while executing command at 14
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> No changes made while executing command at 15
 )
 if %select% == 3 ( goto end )
 :: Reset IPstack
@@ -199,9 +219,9 @@ set timestamp=%date%
 set "file=IPstack_output_%timestamp%.txt"
 netsh int ip reset > %file%
 if %errorlevel% == 0 ( 
-    echo [*] ^> Cleared IP stack 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Cleared IP stack 
 ) else ( 
-    echo [*] ^> Error while executing command at 15
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 16
 )
 @ping -n 1 localhost> nul
 :: TCP edit (idk if admin required)
@@ -209,9 +229,9 @@ set timestamp=%date%
 set "file=TCP_edit_output_%timestamp%.txt"
 netsh int tcp set heuristics disabled > %file%
 if %errorlevel% == 0 (
-    echo [*] ^> TCP has been configurated 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> TCP has been configurated 
 ) else ( 
-    echo [*] ^> Error while executing command at 16 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 17
 )
 @ping -n 1 localhost> nul
 :: Clear ARP (admin required)
@@ -219,59 +239,59 @@ set timestamp=%date%
 set "file=Clear_ARP_output_%timestamp%.txt"
 arp -d * > %file%
 if %errorlevel% == 0 (
-    echo [*] ^> ARP has been cleared 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> ARP has been cleared 
 ) else ( 
-    echo [*] ^> Error while executing command at 17
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 18
 )
 if %select% == 2 ( goto end )
 :: Restart Explorer.exe (no admin required)
 set "file=KILL_explorer_output_%timestamp%.txt"
 taskkill /f /im explorer.exe >nul 2>&1 >%file%
 if %errorlevel% == 0 (
-    echo [*] ^> Killed explorer 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Killed explorer 
 ) else ( 
-    echo [*] ^> Error while executing command at 18 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 19
 )
 @ping -n 1 localhost> nul
 start explorer.exe >nul 2>&1
 if %errorlevel% == 0 (
-    echo [*] ^> Started explorer 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Started explorer 
 ) else (
-    echo [*] ^> Error while executing command at 19
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 20
 )
 @ping -n 1 localhost> nul
 :: Restart Audiosrv (admin required)
 set "file=Restart_audio_output_%timestamp%.txt"
 net stop audiosrv > %file%
 if %errorlevel% == 0 (
-    echo [*] ^> Paused audiosrv 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Paused audiosrv 
 ) else ( 
-    echo [*] ^> Error while executing command at 20 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 21
 )
 @ping -n 1 localhost> nul
 net start audiosrv > nul 2>&1
 if %errorlevel% == 0 (
-    echo [*] ^> Started audiosrv 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Started audiosrv 
 ) else ( 
-    echo [*] ^> Error while executing command at 21 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 22
 )
 @ping -n 1 localhost> nul
 :: Disk Cleanup
 set "file=Disk_output_%timestamp%.txt"
 cleanmgr /sagerun:1 > %file%
 if %errorlevel% == 0 (
-    echo [*] ^> Cleaned Disk successfully 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Cleaned Disk successfully 
 ) else ( 
-    echo [*] ^> Error while executing command at 22 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 23
 )
 @ping -n 1 localhost> nul
 :: Clear Windows Temp / Bin (don't run with admin)
 start cmd /c del "%temp%\*.*" /s /q /f
 start cmd /c rd /s /q C:\$Recycle.Bin
 if %errorlevel% == 0 (
-    echo [*] ^> Cleared Windows Temp 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Cleared Windows Temp 
 ) else ( 
-    echo [*] ^> Error while executing command at 23 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 24
 )
 @ping -n 1 localhost> nul
 :: Ask for sfc (admin required)
@@ -279,7 +299,7 @@ if %errorlevel% == 0 (
 echo.
 set timestamp=%date%
 set "file=sfc_output_%timestamp%.txt"
-echo [*] ^> You can perform a file scan to check your system
+echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> You can perform a file scan to check your system
 set /p sfc="Perform a file scan (y/N): "
 if %sfc% == y ( 
     sfc /scannow > %file% 
@@ -289,18 +309,18 @@ if %sfc% == y (
 if %errorlevel% == 0 (
     goto skipsfc
 ) else ( 
-    echo [*] ^> Error while executing command at 24 
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 25
 )
 :skipsfc
 :: Ask for addons
 echo.
 @ping -n 1 localhost> nul
-echo [*] ^> Do you want to execute addons as well
+echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Do you want to execute addons as well
 set /p addons="Use addons (list/N): "
 if %addons% == list (
     echo.
-    echo [*] ^> sysfix.bat
-    echo [*] ^> driverfix.bat
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> sysfix.bat
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> driverfix.bat
 ) else (
     goto end
 )
@@ -318,7 +338,7 @@ if %exaddons% == driverfix.bat (
 :: End of the script / Restart
 :end
 echo.
-echo [*] ^> You need to restart your computer for all the commands to work
+echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> You need to restart your computer for all the commands to work
 set /p restart="Restart your pc (y/N): "
 if %restart% == y ( 
     shutdown /r /f /t 1 
