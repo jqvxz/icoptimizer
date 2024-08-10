@@ -40,7 +40,7 @@ for /f "tokens=2 delims==" %%G in ('wmic memorychip get capacity /value') do set
 echo Executed on [%computername%] by [%username%] on [%date%] at [%time%] with [Windows 10/11/8/7] > .%computername%
 echo. >> .%computername%
 echo Specs are [%cpu%] [%video%] [%storage%] [%ram_kb%] >> .%computername%
-title IC - Optimizer V 3.4
+title IC - Optimizer V 3.5
 SETLOCAL ENABLEDELAYEDEXPANSION
 set lang=%SystemRoot%\System32\wbem\wmic.exe os get locale
 :: Select script (no admin)
