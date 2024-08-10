@@ -32,6 +32,7 @@
 - Clear Windows Temp/Bin: Optimizes disk usage.
 - Perform File Scan (sfc): Checks system files.
 - Restart Computer: Implements changes.
-    
+- Updated color scheme     
+
 ## FAQ
 - Just open an issue above 
