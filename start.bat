@@ -40,11 +40,11 @@ for /f "tokens=2 delims==" %%G in ('wmic memorychip get capacity /value') do set
 echo Executed on [%computername%] by [%username%] on [%date%] at [%time%] with [Windows 10/11/8/7] > .%computername%
 echo. >> .%computername%
 echo Specs are [%cpu%] [%video%] [%storage%] [%ram_kb%] >> .%computername%
-title IC - Optimizer V 3.5
+title IC - Optimizer v3.6
 SETLOCAL ENABLEDELAYEDEXPANSION
 set lang=%SystemRoot%\System32\wbem\wmic.exe os get locale
 :: Select script (no admin)
-echo %YELLOW%[%CYAN%1%YELLOW%]%RESET% ^> Execute all commands 
+echo %YELLOW%[%CYAN%1%YELLOW%]%RESET% ^> Execute all commands (recommended)
 @ping -n 1 localhost> nul
 echo %YELLOW%[%CYAN%2%YELLOW%]%RESET% ^> Only execute network related commands
 @ping -n 1 localhost> nul
@@ -211,6 +211,21 @@ if %errorlevel% equ 0 (
 ) else (
     echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> No changes made while executing command at 15
 )
+:: Disable Windows Stickey keys
+set %timestamp%=%date%
+set "file=StickyKeys_output_%timestamp%.txt"
+reg add "HKCU\Control Panel\Accessibility\StickyKeys" /v "Flags" /t REG_DWORD /d "506" /f >nul 2>&1
+reg add "HKCU\Control Panel\Accessibility\StickyKeys" /v "StickyKeysEnabled" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKCU\Control Panel\Accessibility\StickyKeys" /v "HotkeyTriggered" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKCU\Control Panel\Accessibility\StickyKeys" /v "AudibleFeedback" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKCU\Control Panel\Accessibility" /v "KeyboardPreference" /t REG_DWORD /d "0" /f >nul 2>&1
+
+reg query "HKCU\Control Panel\Accessibility\StickyKeys" /v "StickyKeysEnabled" >%file%
+if %errorlevel% equ 0 (
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Windows StickyKeys disabled successfully
+) else (
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while disable StickeyKeys at 16
+)
 if %select% == 3 ( goto end )
 :: Reset IPstack
 :second_execute_2 rem Start of exclude reg (second run)
@@ -221,7 +236,7 @@ netsh int ip reset > %file%
 if %errorlevel% == 0 ( 
     echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Cleared IP stack 
 ) else ( 
-    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 16
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 17
 )
 @ping -n 1 localhost> nul
 :: TCP edit (idk if admin required)
@@ -231,7 +246,7 @@ netsh int tcp set heuristics disabled > %file%
 if %errorlevel% == 0 (
     echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> TCP has been configurated 
 ) else ( 
-    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 17
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 18
 )
 @ping -n 1 localhost> nul
 :: Clear ARP (admin required)
@@ -241,7 +256,7 @@ arp -d * > %file%
 if %errorlevel% == 0 (
     echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> ARP has been cleared 
 ) else ( 
-    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 18
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 19
 )
 if %select% == 2 ( goto end )
 :: Restart Explorer.exe (no admin required)
@@ -250,14 +265,14 @@ taskkill /f /im explorer.exe >nul 2>&1 >%file%
 if %errorlevel% == 0 (
     echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Killed explorer 
 ) else ( 
-    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 19
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 20
 )
 @ping -n 1 localhost> nul
 start explorer.exe >nul 2>&1
 if %errorlevel% == 0 (
     echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Started explorer 
 ) else (
-    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 20
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 21
 )
 @ping -n 1 localhost> nul
 :: Restart Audiosrv (admin required)
@@ -266,14 +281,14 @@ net stop audiosrv > %file%
 if %errorlevel% == 0 (
     echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Paused audiosrv 
 ) else ( 
-    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 21
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 22
 )
 @ping -n 1 localhost> nul
 net start audiosrv > nul 2>&1
 if %errorlevel% == 0 (
     echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Started audiosrv 
 ) else ( 
-    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 22
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 23
 )
 @ping -n 1 localhost> nul
 :: Disk Cleanup
@@ -282,7 +297,7 @@ cleanmgr /sagerun:1 > %file%
 if %errorlevel% == 0 (
     echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Cleaned Disk successfully 
 ) else ( 
-    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 23
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 24
 )
 @ping -n 1 localhost> nul
 :: Clear Windows Temp / Bin (don't run with admin)
@@ -291,9 +306,109 @@ start cmd /c rd /s /q C:\$Recycle.Bin
 if %errorlevel% == 0 (
     echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Cleared Windows Temp 
 ) else ( 
-    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 24
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 25
 )
 @ping -n 1 localhost> nul
+:: Scan for useless programs
+set installed=0
+:: Check for McAfee
+reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{26C36889-3AE9-467D-8D32-79AF9D5E644A}" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 1. Problematic program is not installed
+) else (
+    reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{26C36889-3AE9-467D-8D32-79AF9D5E644A}" /v DisplayName 2>nul | findstr /i /c:"McAfee" >nul
+    if errorlevel 0 (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Please remove McAfee
+        set installed=1
+    ) else (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 1. Problematic program is not installed
+    )
+)
+:: Check for RAV Protection
+reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{A659376D-C397-4F52-9479-6B189509045E}" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 2. Problematic program is not installed
+) else (
+    reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{A659376D-C397-4F52-9479-6B189509045E}" /v DisplayName 2>nul | findstr /i /c:"RAV" >nul
+    if errorlevel 0 (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Please remove RAV Protection
+        set installed=1
+    ) else (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 2. Problematic program is not installed
+    )
+)
+:: Check for Norton Security
+reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{8C704500-4BF2-11D1-9F44-00C04FC295EE}" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 3. Problematic program is not installed
+) else (
+    reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{8C704500-4BF2-11D1-9F44-00C04FC295EE}" /v DisplayName 2>nul | findstr /i /c:"Norton" >nul
+    if errorlevel 0 (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Please remove Norton Security
+        set installed=1
+    ) else (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 3. Problematic program is not installed
+    )
+)
+:: Check for Avast Antivirus
+reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{E6F465A5-1FB8-406F-99C0-7E3E10C4B55A}" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 4. Problematic program is not installed
+) else (
+    reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{E6F465A5-1FB8-406F-99C0-7E3E10C4B55A}" /v DisplayName 2>nul | findstr /i /c:"Avast" >nul
+    if errorlevel 0 (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Please remove Avast Antivirus
+        set installed=1
+    ) else (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 4. Problematic program is not installed 
+    )
+)
+:: Check for Kaspersky Security
+reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{2F617D7C-D9AA-4D74-9182-2A0F36EEDCB4}" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 5. Problematic program is not installed 
+) else (
+    reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{2F617D7C-D9AA-4D74-9182-2A0F36EEDCB4}" /v DisplayName 2>nul | findstr /i /c:"Kaspersky" >nul
+    if errorlevel 0 (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Consider removing Kaspersky Security
+        set installed=1
+    ) else (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 5. Problematic program is not installed 
+    )
+)
+:: Check for AVG Antivirus
+reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{B056A5B5-1E98-4872-8779-5BB072220D6E}" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 6. Problematic program is not installed 
+) else (
+    reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{B056A5B5-1E98-4872-8779-5BB072220D6E}" /v DisplayName 2>nul | findstr /i /c:"AVG" >nul
+    if errorlevel 0 (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Please remove AVG Antivirus
+        set installed=1
+    ) else (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 6. Problematic program is not installed 
+    )
+)
+:: Check for Bitdefender
+reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{DCE31E58-CB4F-4A90-9232-5FDCB2A97C98}" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 7. Problematic program is not installed 
+) else (
+    reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{DCE31E58-CB4F-4A90-9232-5FDCB2A97C98}" /v DisplayName 2>nul | findstr /i /c:"Bitdefender" >nul
+    if errorlevel 0 (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Consider removing Bitdefender
+        set installed=1
+    ) else (
+        echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> 7. Problematic program is not installed 
+    )
+)
+:: Create file and message
+set timestamp=%date%
+set "file=Programs_output_%timestamp%.txt"
+if %installed%==0 (
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Scanned for McAfee, RAV, Norton, Avast, Kaspersky, AVG, Bitdefender
+)
+echo Value of installed = %installed% > %file%
 :: Ask for sfc (admin required)
 :end
 echo.
@@ -309,32 +424,9 @@ if %sfc% == y (
 if %errorlevel% == 0 (
     goto skipsfc
 ) else ( 
-    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 25
+    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Error while executing command at 26
 )
 :skipsfc
-:: Ask for addons
-echo.
-@ping -n 1 localhost> nul
-echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> Do you want to execute addons as well
-set /p addons="Use addons (list/N): "
-if %addons% == list (
-    echo.
-    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> sysfix.bat
-    echo %YELLOW%[%CYAN%*%YELLOW%]%RESET% ^> driverfix.bat
-) else (
-    goto end
-)
-set /p exaddons="Select your addon (addon/N): "
-if %exaddons% == sysfix.bat (
-    cd ..
-    cd addons && start sysfix.bat
-)
-if %exaddons% == driverfix.bat (
-    cd ..
-    cd addons && start driverfix
-) else (
-    goto end
-)
 :: End of the script / Restart
 :end
 echo.
