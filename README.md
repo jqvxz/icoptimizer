@@ -1,38 +1,54 @@
 # IC optimizer
 ![ic](https://github.com/jqvxz/icoptimizer/assets/143961758/aaecb917-3c01-4c68-b402-dd60a09bc230)
 
-## Information
-- Easy and simple windows batch optimizer
-- I will soon create a version of icoptimizer using a real programming language
-                        
 ## How to use
-- DO NOT right click and execute the start file as admin. Wait for the script to ask you
-- Wait and follow the instructions inside the script 
+
 - You can look into the info folder if something went wrong
-- Current Version is 3.5 (old releases are available as well)
+- Current Version is 3.6 - Might be stable idk
 
 ## What does the script do
-- Select what commands should be executed
-- Clear DNS Cache: Enhances network performance.
-- Reset Network Adapter: Resolves connectivity issues.
-- Kill Processes: Optimizes system performance.
-- Modify Windows Search: Improves privacy in Explorer.
-- Disable Error Report: Prevents non-critical error prompts.
-- Disable Windows Telemetry: Enhances privacy.
-- Disable Compatibility Assistant: Improves operation.
-- Disable Remote Registry Service: Boosts security.
-- Disable Windows Remote Management Service
-- Reset IP Stack: Fixes network problems.
-- TCP Configuration: Optimizes network settings.
-- Clear ARP Cache: Resolves network issues.
-- Restart Explorer.exe: Refreshes interface.
-- Restart Audiosrv: Fixes audio problems.
-- Disk Cleanup: Frees disk space.
-- Addons: sysfix.bat, driverfix.bat
-- Clear Windows Temp/Bin: Optimizes disk usage.
-- Perform File Scan (sfc): Checks system files.
-- Restart Computer: Implements changes.
-- Updated color scheme     
 
-## FAQ
-- Just open an issue above 
+- Speed up internet connection
+- Increase system responsiveness
+- Disable unnecessary services
+- Free up memory
+- Optimize disk usage
+- Reduce startup time
+- Improve gaming performance
+- Disable Windows telemetry
+- Prevent Windows Update auto-start
+- Disable Windows Defender
+- Block remote desktop connections
+- Fix DNS cache
+- Disable hibernation.
+- Disable unnecessary startup apps
+- Flush DNS cache
+- Disable system restore
+- Optimize CPU performance
+- Change registry settings to improve performance
+- Disable Cortana
+- Disable automatic driver updates
+- Disable Windows Search
+- Disable error reporting
+- Disable user tracking
+- Disable background apps
+- Disable Microsoft OneDrive sync
+- Block unwanted scheduled tasks
+- Optimize file system
+- Disable visual effects
+- Disable taskbar transparency
+- Disable unnecessary Windows animations
+- Disable background services
+- Turn off system logging
+- Adjust power settings for performance.
+- Force Windows updates to check manually
+- Prevent taskbar auto-hide
+- Clear temp files
+- Flush Windows event log
+
+- See output logs and create a error on github when there are any errors
+
+## LOG for 3.6
+
+- Disable Windows StickyKeys
+- Display useless programms
