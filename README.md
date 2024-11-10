@@ -1,4 +1,4 @@
 # IC optimizer
-![ic](https://github.com/jqvxz/icoptimizer/assets/143961758/aaecb917-3c01-4c68-b402-dd60a09bc230)
+![ic](https://github.com/user-attachments/assets/cc65b139-4956-4145-a055-7188b31dbdfc)
 
 See .help.txt for info
