@@ -30,6 +30,7 @@ cls
 for /F "delims=" %%A in (header.txt) do (
     echo %RED%%%A%RESET%
 )
+[!] This version of icoptimizer is outdated please install icoptimizer-remake
 cd ..\..
 echo.
 cd .main/info
